@@ -15,12 +15,75 @@ public class IPC1{
     boolean disponiblepeli[] = new boolean[30];
     int posicionPelicula = 0; 
     int posicionCliente = 0;
+    int cantidadCadaCategoria[] = new int [30];
+    String cadaCategoria[] = new String[30];
+    int cantidadCategorias = 0;
 
-
-    
     public static void main (String[] args){
         IPC1 practica2 = new IPC1();      
     }
+    public void reportes (){
+        int opcion ;
+        System.out.println("Reportes cantidad Categorias = 1 Filtrar por categoria = 2");
+        opcion = scanner.nextInt();
+        scanner.nextLine();
+        
+        
+        
+        
+        if(opcion == 1){
+            reporte1();
+            System.out.println("");
+        }
+        else{
+            if(opcion == 2){
+                reporte2();
+                System.out.println("");
+            }
+            else{
+                System.out.println("La opcion ingresada no existe");
+                System.out.println("");
+            }
+
+        }
+
+    }
+    public void reporte1(){
+        System.out.println(".................Pelicualas.................");
+        for (int i = 0; i < cantidadCategorias; i++) {
+            System.out.print("Categoria: "+cadaCategoria[i] + "===== Cantidad Categorias: " + cantidadCadaCategoria[i]);
+            System.out.println("");
+        }
+    }
+    public void reporte2(){
+        String categoria;
+        System.out.println("Ingrese la categoria");
+        categoria = scanner.nextLine();
+        System.out.println("");
+        System.out.println(".................Pelicualas Por Categoria.................");
+        for (int i = 0; i < posicionPelicula; i++) {
+            if(categoriaPeli[i].equals(categoria)){
+                System.out.print("El nombre de la pelicula es: " + nameMovie[i]);  
+                System.out.println(" ");
+                System.out.print("El ID de la pelicula es: " + idpeliculas[i] );
+                System.out.println(" ");
+                System.out.print("El anio de la pelicula es: " + anioPeli[i]);
+                System.out.println(" ");
+                System.out.println("la categoria de la pelicula es: " + categoriaPeli[i]);
+                
+                if (disponiblepeli[i] == true ){
+                    System.out.println("La pelicula  esta disponible, para usted");
+                    System.out.println(" ");
+                }
+                else{
+                    System.out.println("La pelicula  No esta disponible, para usted");
+                    System.out.println(" ");
+                }
+            }   
+        }
+    }
+    
+   
     public IPC1 () {
             int menu;
             do {
@@ -156,6 +219,20 @@ public class IPC1{
         categoria = scanner.nextLine();
         categoriaPeli [posicionPelicula] = categoria;
 
+        boolean encontrado = false;
+        for (int i = 0; i < cantidadCategorias; i++) {
+            if(categoria.equals(cadaCategoria[i])){
+                cantidadCadaCategoria[i] = cantidadCadaCategoria[i] + 1;
+                encontrado = true;
+                break;
+            }
+        }
+        if(!encontrado){
+            cadaCategoria[cantidadCategorias] = categoria;
+            cantidadCadaCategoria[cantidadCategorias] = 1;
+            cantidadCategorias++;
+        }
+
         disponiblepeli[posicionPelicula] = true;
     
         posicionPelicula ++;
@@ -211,7 +288,7 @@ public class IPC1{
             else{
             System.out.println("La pelicula  No esta disponible, para usted");
             System.out.println(" ");
-        }
+            }
         }
         System.out.println("Para regresar al menú = 'Presione cualquier letre'  ó volver a ver el listado de peliculas = 2");
         opcion = scanner.nextInt();
@@ -239,23 +316,22 @@ public class IPC1{
                         auxiId = idpeliculas[i];
                         idpeliculas[i] = idpeliculas[j];
                         idpeliculas[j]= auxiId;
-                         int auxianio;
-                         auxianio = anioPeli[i];
-                         anioPeli[i] = anioPeli[j];
-                         anioPeli[j] = auxianio; 
+
+                        int auxianio;
+                        auxianio = anioPeli[i];
+                        anioPeli[i] = anioPeli[j];
+                        anioPeli[j] = auxianio;
                     }
 
                 }
                 
             }
 
-
-
         }
         public void mostrarpelisOrdenadas(){
         for (int i = 0; i < posicionPelicula; i++) {
             System.out.println(nameMovie[i] + " ===== " + idpeliculas[i] + " ===== " + anioPeli[i] + " ===== " + categoriaPeli[i]); 
-}
+        }
 
         }
 
@@ -267,8 +343,5 @@ public class IPC1{
 
 
         }
-        public static void reportes (){
 
-
-        }
     }
